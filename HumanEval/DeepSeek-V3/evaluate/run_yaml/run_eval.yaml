@@ -1,0 +1,19 @@
+# Path to the problem file containing the test cases and problem descriptions
+problem_file: "/HumanEval.jsonl.gz"
+
+# Path to the sample file containing the data to be evaluated
+sample_file: ""
+
+# Path to the output file where the evaluation results will be saved
+output_file: ""
+
+# Evaluation thresholds (comma-separated), indicating the top-k values to consider
+k: ""
+
+# Number of worker threads to use for parallel evaluation
+n_workers: 4
+
+# Timeout (in seconds) for each evaluation task
+timeout: 3.0
+
+

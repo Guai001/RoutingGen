@@ -1,0 +1,189 @@
+
+
+api:
+  base_url: ""
+  key: ""
+  model: "deepseek-v3"
+  delay_between_requests: 1.2
+
+model:
+  model_name: deepseek-v3 
+  max_length: 300   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: MCEval       
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file:   
+
+
+# Output configuration
+generation: 
+  xcot_output_file:   
+  final_code_output_file: 
+  code_output_file: 
+
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 5
+
+
+# Messages configuration
+messages:
+  xcot_system: "You are an expert Python programmer who provides structured problem-solving processes for Python functions. Your task is to analyze a given function definition and generate a structured solution breakdown."
+
+  xcot_examples:
+    - user: |
+          def reverse_String(str):
+              \"\"\" Write a python function to reverse the given string.\"\"\"
+              Pass
+
+          Please understand the requirement and write a rough solving process. It starts with a input-output structure. You should use three basic structures to build the solving process, including sequences, branches, and loops. The necessary details should be written in natural languages.
+
+      assistant: |
+          Input: str: a string  
+          Output: reversed_str: the reversed version of str  
+          1: Initialize reversed_str as an empty string.  
+          2: for each character ch in str from the last to the first:  
+          3:     Append ch to reversed_str.  
+          4: return reversed_str
+
+    - user: |
+          def sum_Of_Squares(lst):
+              \"\"\" Write a python function to calculate the sum of squares of the numbers in the given list. \"\"\"
+              Pass
+
+          Please understand the requirement and write a rough solving process. It starts with a input-output structure. You should use three basic structures to build the solving process, including sequences, branches, and loops. The necessary details should be written in natural languages.
+
+      assistant: |
+          Input: lst: a list of numbers
+          Output: total: the sum of squares of numbers in lst
+          1: Initialize total as 0.
+          2: for each number num in lst:
+          3:     Compute num squared and add it to total.
+          4: return total
+
+    - user: |
+          def binary_Search(sorted_lst, target):
+            \"\"\" Write a python function to perform binary search on a sorted list to find the target element. \"\"\"
+            Pass
+
+          Please understand the requirement and write a rough solving process. It starts with a input-output structure. You should use three basic structures to build the solving process, including sequences, branches, and loops. The necessary details should be written in natural languages.
+
+      assistant: |
+          Input: sorted_lst: a sorted list of numbers, target: a number to search for  
+          Output: index: the index of target in sorted_lst, or -1 if not found  
+          1: Initialize low as 0 and high as the last index of sorted_lst.  
+          2: while low is less than or equal to high:  
+          3:     Compute mid as the middle index between low and high.  
+          4:     if sorted_lst[mid] is equal to target:  
+          5:         return mid  
+          6:     else if sorted_lst[mid] is less than target:  
+          7:         Set low to mid + 1  
+          8:     else:  
+          9:         Set high to mid - 1  
+          10: return -1
+
+  xcot_user: |
+          {prompt}
+
+          Please understand the requirement and write a rough solving process. It starts with an input-output structure. You should use three basic structures to build the solving process, including sequences, branches, and loops. The necessary details should be written in natural languages.
+
+  code_system: "You are an expert Python programmer. Given a function definition, complete the missing implementation by analyzing the provided docstring and structured problem-solving steps. Ensure that your implementation aligns with the intended functionality."
+  
+  code_examples:
+    - user: |
+          def reverse_String(str):
+              """ Write a python function to reverse the given string.""" 
+
+              """
+              Input: str: a string  
+              Output: reversed_str: the reversed version of str  
+              1: Initialize reversed_str as an empty string.  
+              2: for each character ch in str from the last to the first:  
+              3:     Append ch to reversed_str.  
+              4: return reversed_str
+              """
+          
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+
+      assistant: |
+          ```python
+          def reverse_String(str):
+              reversed_str = ""  
+              for ch in str[::-1]:  
+                  reversed_str += ch  
+              return reversed_str  
+          ```
+
+    - user: |
+          def sum_Of_Squares(lst):
+              """ Write a python function to calculate the sum of squares of the numbers in the given list. """  
+
+              """
+              Input: lst: a list of numbers
+              Output: total: the sum of squares of numbers in lst
+              1: Initialize total as 0.
+              2: for each number num in lst:
+              3:     Compute num squared and add it to total.
+              4: return total
+              """
+    
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+
+      assistant: |
+          ```python
+          def sum_Of_Squares(lst):
+              total = 0
+              for num in lst:
+                  total += num ** 2
+              return total
+          ```
+
+    - user: |
+          def binary_Search(sorted_lst, target):
+              """ Write a python function to perform binary search on a sorted list to find the target element."""   
+
+              """
+              Input: sorted_lst: a sorted list of numbers, target: a number to search for  
+              Output: index: the index of target in sorted_lst, or -1 if not found  
+              1: Initialize low as 0 and high as the last index of sorted_lst.  
+              2: while low is less than or equal to high:  
+              3:     Compute mid as the middle index between low and high.  
+              4:     if sorted_lst[mid] is equal to target:  
+              5:         return mid  
+              6:     else if sorted_lst[mid] is less than target:  
+              7:         Set low to mid + 1  
+              8:     else:  
+              9:         Set high to mid - 1  
+              10: return -1
+              """
+          
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+
+      assistant: |
+          ```python
+          def binary_Search(sorted_lst, target):
+              low = 0
+              high = len(sorted_lst) - 1
+              while low <= high:
+                  mid = (low + high) // 2
+                  if sorted_lst[mid] == target:
+                      return mid
+                  elif sorted_lst[mid] < target:
+                      low = mid + 1
+                  else:
+                      high = mid - 1
+              return -1
+          ```
+
+  code_user: |
+          {combined_xcot_prompt}
+
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.

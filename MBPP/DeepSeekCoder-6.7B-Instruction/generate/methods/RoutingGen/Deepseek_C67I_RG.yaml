@@ -1,0 +1,231 @@
+
+
+model:
+  model_name: DeepSeekCoder-6.7B-Instruction
+  model_path: 
+  safetensors_shards: 2
+  safetensors_files:
+   
+  max_length: 300   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: mbpp    
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file:   
+
+
+# Output configuration
+generation:
+  xcot_output_file: 
+  final_code_output_file: 
+  token_stats_file: 
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 20
+
+# Messages configuration
+fewshot_messages:
+  code_system: "Implement complete Python code that strictly adheres to the specified functional requirements.  Ensure full compliance with all validation test cases. Format the output strictly as follows: ```python (your implementation here) ```."
+  
+
+  code_examples:
+    - user: |
+          Here is your task: """ Write a python function to reverse the given string."""
+          Your code should pass these tests:\n\n["assert reverse_string('hello') == 'olleh'", "assert reverse_string('') == ''", "assert reverse_string('1234@abc') == 'cba@4321'", "assert reverse_string('a') == 'a'"]\n
+
+      assistant: |
+          ```python
+          def reverse_string(str):
+              reversed_str = ""  
+              for ch in str[::-1]:  
+                  reversed_str += ch  
+              return reversed_str  
+          ```
+
+    - user: |
+          Here is your task: """ Write a python function to calculate the sum of squares of the numbers in the given list. """  
+          Your code should pass these tests:\n\n["assert sum_of_squares([1,2,3]) == 14", "assert sum_of_squares([-1,-2,-3]) == 14", "assert sum_of_squares([]) == 0", "assert sum_of_squares([2,-3,0]) == 13"]\n
+
+          
+      assistant: |
+          ```python
+          def sum_of_squares(lst):
+              total = 0
+              for num in lst:
+                  total += num ** 2
+              return total
+          ```
+
+    - user: |
+          Here is your task: """ Write a python function to perform binary search on a sorted list to find the target element."""  
+          Your code should pass these tests:\n\n["assert binary_search([2,4,6,8,10], 6) == 2", "assert binary_search([1,3,5,7,9], 4) == -1", "assert binary_search([], 5) == -1", "assert binary_search([10,20,30,40,50], 50) == 4"]\n
+          
+
+      assistant: |
+          ```python
+          def binary_search(sorted_lst, target):
+              low = 0
+              high = len(sorted_lst) - 1
+              while low <= high:
+                  mid = (low + high) // 2
+                  if sorted_lst[mid] == target:
+                      return mid
+                  elif sorted_lst[mid] < target:
+                      low = mid + 1
+                  else:
+                      high = mid - 1
+              return -1
+          ```
+
+  code_user: |
+          Here is your task: {prompt} \n\n 
+          Your code should pass these tests:\n\n{test_case}\n
+
+
+# Messages configuration
+messages:
+  xcot_system: "You are an expert Python programmer responsible for providing a structured problem-solving approach to implementing Python functions.  Your task is to analyze the specified functional requirements and produce a structured solution breakdown."
+  
+  xcot_examples:
+    - user: |
+          " Write a python function to reverse the given string. "
+          Your code should pass these tests:\n\n["assert reverse_string('hello') == 'olleh'", "assert reverse_string('') == ''", "assert reverse_string('1234@abc') == 'cba@4321'", "assert reverse_string('a') == 'a'"]\n
+          Please analyze the requirement and provide a structured solving process with the following format:  
+              1: Specification  
+                - Define the input and output format concisely.  
+              2: Idea: Summarize the core logic and optimal algorithm with time complexity.  
+      
+      assistant: |
+          1: Specification:
+            - Input: A string.
+            - Output: The reversed version of the input string.
+          2: Idea:
+            -	Use slicing `[::-1]` to efficiently reverse the string in **O(n) time complexity**.
+    
+    - user: |
+          " Write a python function to calculate the sum of squares of the numbers in the given list. "
+          Your code should pass these tests:\n\n["assert sum_of_squares([1,2,3]) == 14", "assert sum_of_squares([-1,-2,-3]) == 14", "assert sum_of_squares([]) == 0", "assert sum_of_squares([2,-3,0]) == 13"]\n
+          Please analyze the requirement and provide a structured solving process with the following format:  
+              1: Specification  
+                - Define the input and output format concisely.  
+              2: Idea: Summarize the core logic and optimal algorithm with time complexity.  
+          
+      assistant: |
+          1: Specification:
+            - Input: A list of numbers (integers or floats).
+            - Output: The sum of the squares of the numbers in the list.
+          2: Idea:
+            - Iterate over the list, square each element, and sum the results.
+            - This approach has **O(n)** time complexity, where **n** is the length of the list.
+          
+    - user: |
+            " Write a python function to perform binary search on a sorted list to find the target element. "
+            Your code should pass these tests:\n\n["assert binary_search([2,4,6,8,10], 6) == 2", "assert binary_search([1,3,5,7,9], 4) == -1", "assert binary_search([], 5) == -1", "assert binary_search([10,20,30,40,50], 50) == 4"]\n
+            Please analyze the requirement and provide a structured solving process with the following format:  
+                1: Specification  
+                  - Define the input and output format concisely.  
+                2: Idea: Summarize the core logic and optimal algorithm with time complexity.  
+          
+      assistant: |
+          1: Specification:
+            -	Input: A sorted list of numbers (integers or floats) and a target value.
+            -	Output: The index of the target in the list, or -1 if not found.
+          2: Idea:
+            -	Use binary search to find the target in O(log n) time.
+
+  xcot_user: |
+          {prompt}
+          Your code should pass these tests:\n\n{test_case}\n
+          Please analyze the requirement and provide a structured solving process with the following format:  
+              1: Specification  
+                - Define the input and output format concisely.  
+              2: Idea: Summarize the core logic and optimal algorithm with time complexity.  
+
+  code_system: "Implement complete Python code that strictly adheres to the specified functional requirements and follows a structured problem-solving approach.  Ensure full compliance with all validation test cases. Format the output strictly as follows: ```python (your implementation here) ```."
+  
+  code_examples:
+    - user: |
+          Here is your task: """ Write a python function to reverse the given string."""
+          Structured solving process:
+            """
+              1: Specification:
+                - Input: A string.
+                - Output: The reversed version of the input string.
+              2: Idea:
+                -	Use slicing `[::-1]` to efficiently reverse the string in **O(n) time complexity**.
+            """
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+          Your code should pass these tests:\n\n["assert reverse_string('hello') == 'olleh'", "assert reverse_string('') == ''", "assert reverse_string('1234@abc') == 'cba@4321'", "assert reverse_string('a') == 'a'"]\n
+
+
+      assistant: |
+          ```python
+          def reverse_string(str):
+              return str[::-1]
+          ```
+
+    - user: |
+          Here is your task: """ Write a python function to calculate the sum of squares of the numbers in the given list. """  
+          Structured solving process:
+              """
+              1: Specification:
+                - Input: A list of numbers (integers or floats).
+                - Output: The sum of the squares of the numbers in the list.
+              2: Idea:
+                - Iterate over the list, square each element, and sum the results.
+                - This approach has **O(n)** time complexity, where **n** is the length of the list.
+              """
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+          Your code should pass these tests:\n\n["assert sum_of_squares([1,2,3]) == 14", "assert sum_of_squares([-1,-2,-3]) == 14", "assert sum_of_squares([]) == 0", "assert sum_of_squares([2,-3,0]) == 13"]\n
+
+          
+      assistant: |
+          ```python
+          def sum_of_squares(lst):
+              total_sum = 0  
+              for x in lst:  
+                  total_sum += x ** 2  
+              return total_sum  
+          ```
+
+    - user: |
+          Here is your task: """ Write a python function to perform binary search on a sorted list to find the target element."""  
+          Structured solving process:
+              """
+              1: Specification:
+                -	Input: A sorted list of numbers (integers or floats) and a target value.
+                -	Output: The index of the target in the list, or -1 if not found.
+              2: Idea:
+                -	Use binary search to find the target in O(log n) time.
+              """
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+          Your code should pass these tests:\n\n["assert binary_search([2,4,6,8,10], 6) == 2", "assert binary_search([1,3,5,7,9], 4) == -1", "assert binary_search([], 5) == -1", "assert binary_search([10,20,30,40,50], 50) == 4"]\n
+          
+
+      assistant: |
+          ```python
+          def binary_search(sorted_lst, target):
+              low, high = 0, len(sorted_lst) - 1
+              while low <= high:
+                  mid = (low + high) // 2  
+                  if sorted_lst[mid] == target:
+                      return mid
+                  elif sorted_lst[mid] < target:
+                      low = mid + 1
+                  else:
+                      high = mid - 1
+              return -1
+          ```
+
+  code_user: |
+          Here is your task: {prompt} \n\n 
+          Structured solving process:\n {xcot}\n
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+          Your code should pass these tests:\n\n{test_case}\n

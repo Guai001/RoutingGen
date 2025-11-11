@@ -1,0 +1,38 @@
+
+model:
+  model_name: Qwen2.5-Coder-3B-Instruct
+  model_path: 
+  safetensors_shards: 
+  safetensors_files:
+   
+  max_length: 600   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: openeval     
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file: 
+
+
+# Output configuration
+generation: 
+  response_output_file: 
+  final_code_output_file: 
+  
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 20  
+
+
+# Messages configuration
+messages:
+  code_system: "You are an expert Python programmer. When given a function definition, always start your response with 'Let's think step by step.' Then provide the reasoning steps and complete the missing implementation. Ensure that your implementation aligns with the intended functionality."
+
+  code_user: |
+          {prompt}

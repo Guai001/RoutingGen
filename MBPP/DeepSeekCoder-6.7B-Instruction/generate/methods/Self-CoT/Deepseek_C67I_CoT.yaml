@@ -1,0 +1,40 @@
+
+
+model:
+  model_name: DeepSeekCoder-6.7B-Instruction
+  model_path: ""
+  safetensors_shards: 
+  safetensors_files:
+
+  max_length: 600   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: mbpp    
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file: 
+
+
+# Output configuration
+generation: 
+  response_output_file: 
+  final_code_output_file: 
+  
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 20  
+
+
+# Messages configuration
+messages:
+  code_system: "Implement complete Python code that strictly adheres to the specified functional requirements. First, use the Chain-of-Thought (CoT) method to reason step by step, and then proceed to implement complete Python code.  Ensure full compliance with all validation test cases."
+  
+  code_user: |
+          Here is your task: {prompt} \n\n 
+          Your code should pass these tests:\n\n{test_case}\n

@@ -1,0 +1,39 @@
+
+
+model:
+  model_name: Qwen2.5-Coder-3B-Instruct 
+  model_path: 
+  safetensors_shards: 2
+  safetensors_files:
+    
+  max_length: 300   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: MBPP     
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file:   
+
+
+# Output configuration
+generation: 
+  final_code_output_file:  
+  
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 20  
+
+# Messages configuration
+messages:
+  # Messages configuration
+messages:
+  code_system: "Implement complete Python code that strictly adheres to the specified functional requirements, ensuring full compliance with all validation test cases. Format the output strictly as follows: ```python (your implementation here) ```."
+  code_user: |
+          Here is your task: {prompt} 
+          Your code should pass these tests:\n\n{test_case}\n

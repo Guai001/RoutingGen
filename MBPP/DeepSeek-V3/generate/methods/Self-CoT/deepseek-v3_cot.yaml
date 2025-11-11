@@ -1,0 +1,41 @@
+
+
+api:
+  base_url: ""
+  key: ""
+  model: "deepseek-v3"
+  delay_between_requests: 1.2
+
+model:
+  model_name: deepseek-v3 
+  max_length: 600   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: MBPP     
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file:
+
+
+# Output configuration
+generation: 
+  final_code_output_file: 
+  code_output_file: 
+
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 5
+
+# Messages configuration
+messages:
+  code_system: "Implement complete Python code that strictly adheres to the specified functional requirements. First, use the Chain-of-Thought (CoT) method to reason step by step, and then proceed to implement complete Python code.  Ensure full compliance with all validation test cases."
+
+  code_user: |
+          Here is your task: {prompt} \n\n 
+          Your code should pass these tests:\n\n{test_case}\n

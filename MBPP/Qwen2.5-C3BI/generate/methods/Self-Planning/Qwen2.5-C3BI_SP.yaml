@@ -1,0 +1,74 @@
+
+
+model:
+  model_name: Qwen2.5-Coder-3B-Instruct 
+  model_path: 
+  safetensors_shards: 
+  safetensors_files:
+   
+  max_length: 300   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: mbpp    
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file: 
+
+
+# Output configuration
+generation:
+  xcot_output_file:  
+  final_code_output_file: 
+  
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 20
+
+
+# Messages configuration
+messages:
+  xcot_system: "You are an expert Python programmer responsible for providing a structured problem-solving approach to implementing Python functions.  Your task is to analyze the specified functional requirements and produce a structured solution breakdown."
+  
+  xcot_examples:
+    - user: |
+          Write a function to sum the length of the names of a given list of names after removing the names that start with a lowercase letter.
+          
+      assistant: |
+          1.Loop the input list.
+          2.If the name not start with lowercase letter, add the length of the name to result.
+          3.Return the result.
+    
+    - user: |
+          Write a function to increment the numeric values in the given strings by k.
+          
+      assistant: |
+          1.Loop the input list.
+          2.If a string is a number, increment it.
+          3.Return modified list.
+          
+    - user: |
+          Write a python function to find sum of all prime divisors of a given number.
+          
+      assistant: |
+          1.Create a inner function to check if a number is prime.
+          2.Loop all number less than the input that is prime.
+          3.Check if the input is divisible by that.
+          4.Return the result.
+
+  xcot_user: |
+          {prompt}
+
+
+  code_system: "Implement complete Python code that strictly adheres to the specified functional requirements and follows a structured problem-solving approach.  Ensure full compliance with all validation test cases. Format the output strictly as follows: ```python (your implementation here) ```."
+  
+  code_user: |
+          Here is your task: {prompt} \n\n 
+          Structured solving process:\n {xcot}\n
+          # Please check the above solving process and write a code based on it. Note that the solving process may contain errors.
+          Your code should pass these tests:\n\n{test_case}\n

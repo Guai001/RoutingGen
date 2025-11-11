@@ -1,0 +1,40 @@
+
+
+api:
+  base_url: ""
+  key: ""
+  model: "deepseek-v3"
+  delay_between_requests: 1.2
+
+model:
+  model_name: deepseek-v3 
+  max_length: 600   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: humaneval     
+  dataset_file:
+
+# Logging configuration
+logging:
+  log_file: 
+
+
+# Output configuration
+generation: 
+  final_code_output_file: 
+  code_output_file: 
+
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 5
+
+# Messages configuration
+messages:
+  code_system: "You are an expert Python programmer. Given a function definition, first use the Chain-of-Thought (CoT) method to reason step by step, then complete the missing implementation. Ensure that your implementation aligns with the intended functionality."
+
+  code_user: |
+          {prompt}

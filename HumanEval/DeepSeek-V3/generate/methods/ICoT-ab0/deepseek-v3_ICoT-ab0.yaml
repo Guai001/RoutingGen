@@ -1,0 +1,82 @@
+api:
+  base_url: ""
+  key: ""
+  model: "deepseek-v3"
+  delay_between_requests: 1.2
+
+model:
+  model_name: deepseek-v3 
+  max_length: 300   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: humaneval     
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file: 
+
+
+# Output configuration
+generation: 
+  final_code_output_file: 
+  code_output_file: 
+
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 5
+
+# Messages configuration
+messages:
+  code_system: "You are an expert Python programmer. Given a function definition, provide the correct and complete implementation."
+  
+  code_examples:
+    - user: |
+          def reverse_String(str):
+              """ Write a python function to reverse the given string."""
+
+      assistant: |
+          ```python
+          def reverse_String(str):
+              return str[::-1]
+          ```
+
+    - user: |
+          def sum_Of_Squares(lst):
+              """ Write a python function to calculate the sum of squares of the numbers in the given list. """  
+
+      assistant: |
+          ```python
+          def sum_Of_Squares(lst):
+              total_sum = 0  
+              for x in lst:  
+                  total_sum += x ** 2  
+              return total_sum  
+          ```
+
+    - user: |
+          def binary_Search(sorted_lst, target):
+              """ Write a python function to perform binary search on a sorted list to find the target element."""   
+
+      assistant: |
+          ```python
+          def binary_Search(sorted_lst, target):
+              low, high = 0, len(sorted_lst) - 1
+              while low <= high:
+                  mid = (low + high) // 2  
+                  if sorted_lst[mid] == target:
+                      return mid
+                  elif sorted_lst[mid] < target:
+                      low = mid + 1
+                  else:
+                      high = mid - 1
+              return -1
+          ```
+
+  code_user: |
+          {prompt}
+

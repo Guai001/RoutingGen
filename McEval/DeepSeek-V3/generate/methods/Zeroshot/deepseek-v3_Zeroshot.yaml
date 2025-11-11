@@ -1,0 +1,41 @@
+
+
+api:
+  base_url: ""
+  key: ""
+  model: "deepseek-v3"
+  delay_between_requests: 1.2
+
+model:
+  model_name: deepseek-v3 
+  max_length: 300   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: MCEval       
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file:  
+
+
+# Output configuration
+generation: 
+  final_code_output_file:
+  code_output_file: 
+
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 5
+
+# Messages configuration
+messages:
+  # Messages configuration
+messages:
+  code_system: "Given a function definition, complete the missing implementation.Format the output strictly as follows: ```python (your implementation here) ```."
+  code_user: |
+          {prompt}

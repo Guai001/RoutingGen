@@ -1,0 +1,101 @@
+
+
+api:
+  base_url: ""
+  key: ""
+  model: "deepseek-v3"
+  delay_between_requests: 1.2
+
+model:
+  model_name: deepseek-v3 
+  max_length: 300   
+  temperature: 0.8  
+  top_p: 0.95        
+
+# Dataset configuration
+dataset:
+  name: humaneval     
+  dataset_file: 
+
+# Logging configuration
+logging:
+  log_file:  
+
+
+# Output configuration
+generation: 
+  xcot_output_file:
+  final_code_output_file: 
+  code_output_file: 
+
+# Execution configuration
+seed: 24  
+limit: null
+n_samples: 5
+
+# Messages configuration
+messages:
+  xcot_system: "You are an expert Python programmer who provides structured problem-solving processes for Python functions. Your task is to analyze a given function definition and generate a structured solution breakdown."
+
+  xcot_examples:
+    - user: |
+          def encrypt(s):
+            \"\"\"
+            Create a function encrypt that takes a string as an argument and returns a string encrypted with the alphabet being rotated. The alphabet should be rotated in a manner such that the letters shift down by two multiplied to two places.
+            
+            For example:
+            encrypt('hi') returns 'lm'
+            encrypt('asdfghjkl') returns 'ewhjklnop'
+            encrypt('gf') returns 'kj'
+            encrypt('et') returns 'ix'
+            \"\"\"  
+          
+      assistant: |
+          1. Create a alphabet, bias two places multiplied by two.
+          2. Loop the input, find the latter bias letter in alphabet.
+          3. Return result.
+    
+    - user: |
+          def check_if_last_char_is_a_letter(txt):
+            \"\"\"
+            Create a function that returns True if the last character of a given string is an alphabetical character and is not a part of a word, and False otherwise. Note: "word" is a group of characters separated by space.
+
+            Examples:
+            check_if_last_char_is_a_letter("apple pie") → False
+            check_if_last_char_is_a_letter("apple pi e") → True
+            check_if_last_char_is_a_letter("apple pi e ") → False
+            check_if_last_char_is_a_letter("") → False  
+            \"\"\"
+          
+      assistant: |
+          1. If the string is empty, return False.
+          2. If the string does not end with a alphabetical character, return False.
+          3. Split the given string into a list of words.
+          4. Check if the length of the last word is equal to 1.
+          
+    - user: |
+          def file_name_check(file_name):
+            \"\"\"
+            Create a function which takes a string representing a file’s name, and returns ’Yes’ if the the file’s name is valid, and returns ’No’ otherwise.
+            A file’s name is considered to be valid if and only if all the following conditions are met:
+            - There should not be more than three digits (’0’-’9’) in the file’s name.
+            - The file’s name contains exactly one dot ’.’ The substring before the dot should not be empty, and it starts with a letter from the latin alphapet (’a’-’z’ and ’A’-’Z’).
+            - The substring after the dot should be one of these: [’txt’, ’exe’, ’dll’]
+
+            Examples:
+            file_name_check("example.txt") => ’Yes’
+            file_name_check("1example.dll") => ’No’ (the name should start with a latin alphapet letter)  
+            \"\"\"
+          
+      assistant: |
+          1. Check if the file name is valid according to the conditions.
+          2. Return "Yes" if valid, otherwise return "NO".
+
+  xcot_user: |
+          {prompt}
+
+
+  code_system: "You are an expert Python programmer. Given a function definition, complete the missing implementation by analyzing the provided docstring and structured problem-solving steps. Ensure that your implementation aligns with the intended functionality.Format the output strictly as follows: ```python (your implementation here) ```."
+  
+  code_user: |
+          {combined_xcot_prompt}
